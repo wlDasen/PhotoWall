@@ -2,6 +2,7 @@ package net.sunniwell.photowall;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.GridView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
         initData();
         initView();
     }
+
+    @Override
+    protected void onDestroy() {
+        adaptor.cancelAllTask();
+        super.onDestroy();
+    }
+
     private void initData() {
         data = new String[] {
                 "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s160-c/A%252520Photographer.jpg",
@@ -120,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
                 "https://lh5.googleusercontent.com/-kI_QdYx7VlU/URqvLXCB6gI/AAAAAAAAAbs/N31vlZ6u89o/s160-c/Yet%252520Another%252520Rockaway%252520Sunset.jpg",
                 "https://lh4.googleusercontent.com/-e9NHZ5k5MSs/URqvMIBZjtI/AAAAAAAAAbs/1fV810rDNfQ/s160-c/Yosemite%252520Tree.jpg"
         };
+        for (int i = 0; i < data.length; i++) {
+            if (i > 0 && data[i].equals(data[i - 1])) {
+                Log.d(TAG, "initData: equal....");
+            }
+        }
     }
     private void initView() {
         gridView = (GridView)findViewById(R.id.grid_view);
